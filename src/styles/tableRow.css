@@ -1,0 +1,17 @@
+
+td {
+    padding: 0.5rem;
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #1f2936;
+}
+
+tr:nth-child(odd) {
+    background-color: #1b2a3f;
+}
+
+tr.SelectedRow {
+    background-color: #384c68;
+}

@@ -49,3 +49,5 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 https://blog.stackademic.com/pagination-infinite-loading-with-redux-toolkit-createapi-a265ac25c3bd
 https://github.com/eirikhanasand/pokemontable
 https://redux-toolkit.js.org/rtk-query/
+https://stackoverflow.com/questions/67572633/how-do-i-implement-a-function-to-navigate-through-my-react-table-using-arrow-key
+https://stackoverflow.com/questions/54633690/how-can-i-use-multiple-refs-for-an-array-of-elements-with-hooks

@@ -1,13 +1,16 @@
 import localStorage from 'redux-persist/lib/storage';
 import { combineReducers, configureStore } from "@reduxjs/toolkit"
 import { FLUSH, PAUSE, PERSIST, persistReducer, PURGE, REGISTER, REHYDRATE } from "redux-persist"
-import { pokemonApi } from './pokemon';
-// import thunk from "redux-thunk"
+import TableState from './table';
+import { pokemonApi } from "./api"
 
 // Combines all reducers
 const reducers = combineReducers({
     [pokemonApi.reducerPath]: pokemonApi.reducer,
+    TableState
 })
+
+type RootReducer = ReturnType<typeof reducers>
 
   // Function to localstore redux state
 const persistConfig = {
@@ -18,11 +21,12 @@ const persistConfig = {
     // Sets localstorage as the type of storage to use
     storage: localStorage,
     // Blacklist the pokemonApi reducer (It still recives the rehydrate action for some reason)
-    blacklist: [pokemonApi.reducerPath]
+    blacklist: [pokemonApi.reducerPath],
+    whitelist: ["table"]
 }
 
 // Persistor to remember the state
-const persistedReducer = persistReducer(persistConfig, reducers)
+const persistedReducer = persistReducer<RootReducer>(persistConfig, reducers)
 
 // Function to configure the store
 const Store = configureStore({
@@ -31,9 +35,7 @@ const Store = configureStore({
     // Middleware
     middleware: (getDefaultMiddleware) => 
         getDefaultMiddleware({
-            serializableCheck: {
-                ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-            }
+            serializableCheck: false,
         }).concat(pokemonApi.middleware)
 })
 

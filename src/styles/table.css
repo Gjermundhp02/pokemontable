@@ -1,0 +1,24 @@
+table {
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
+}
+
+thead {
+    position: sticky;
+    top: 0;
+}
+
+th {
+    padding: 1rem;
+}
+
+#table {
+    border-radius: 1rem; 
+    overflow: hidden; 
+    display: inline-block;
+}
+
+#thr {
+    background-color: #162231;
+}

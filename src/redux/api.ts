@@ -1,7 +1,5 @@
-import { Action, createSlice } from "@reduxjs/toolkit"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 import { Pokemon, PokemonPage } from "../../types"
-import { REHYDRATE } from "redux-persist"
 
 type next = string | void
 
@@ -10,23 +8,24 @@ type PokeList = {
     pokemons: Pokemon[]
 }
 
-type RootState = any
-
-function isHydrateAction(action: Action): action is Action<typeof REHYDRATE> & {
-    key: string
-    payload: RootState
-    err: unknown
-  } {
-    return action.type === REHYDRATE
-  }
-
+/**
+ * Fetches a list of pokemons from the pokeapi
+ * @param arg The query string to use
+ * 
+ * TODO: Filter down to only the used data
+ * TODO: Persist how far the user has scrolled/how many is loaded (offset)
+ */
 export const pokemonApi = createApi({
     reducerPath: "api",
     baseQuery: fetchBaseQuery({ baseUrl: "https://pokeapi.co/api/v2/" }),
     endpoints: (builder) => ({
+        getPokemon: builder.query<Pokemon, number>({
+            query: (id) => `pokemon/${id}`
+        }),
+
         // Dessigned to be called useGetPokemonListQuery(data.next)
         getPokemonList: builder.query<PokeList, next>({
-            async queryFn(arg = "limit=20", api, extraOptions, baseQuery) {
+            async queryFn(arg = "limit=20", _api, _extraOptions, baseQuery) {
                 const res = await baseQuery(`pokemon?${arg}`);
                 if(res.error) {
                     return { error: res.error }
@@ -50,13 +49,10 @@ export const pokemonApi = createApi({
             // Always merge incoming data to the cache entry
             merge: (currentCache, newItems) => {
                 currentCache.pokemons.push(...newItems.pokemons)
+                currentCache.next = newItems.next
             },
         }),
     }),
 })
 
-export const { useGetPokemonListQuery, useLazyGetPokemonListQuery } = pokemonApi
-
-// export const pokemonSlice = createSlice({
-//     name: "pokemon",
-// })
+export const { useGetPokemonListQuery, useLazyGetPokemonListQuery, useGetPokemonQuery } = pokemonApi
