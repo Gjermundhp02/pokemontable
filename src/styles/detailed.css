@@ -1,0 +1,14 @@
+.container {
+    background-color: #1b2a3f;
+    border-radius: 1rem;
+}
+
+.container > div {
+    display: flex;
+}
+
+img {
+    width: 25%;
+    image-rendering: crisp-edges;
+    display: inline;
+}

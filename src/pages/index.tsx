@@ -25,7 +25,7 @@ export default function Home() {
     const documentRef = useRef(document)
 
     
-    const handleArrowKeys = useCallback((e: KeyboardEvent) => {
+    const handleKeyDown = useCallback((e: KeyboardEvent) => {
         switch (e.key) {
             case "ArrowDown":
                 if (!data?.pokemons) return false
@@ -55,10 +55,10 @@ export default function Home() {
     
     // Register eventlisteners
     useEffect(() => {
-        documentRef.current.addEventListener("keydown", handleArrowKeys)
+        documentRef.current.addEventListener("keydown", handleKeyDown)
         documentRef.current.addEventListener("scroll", handleScroll)
         return () => {
-            documentRef.current.removeEventListener("keydown", handleArrowKeys)
+            documentRef.current.removeEventListener("keydown", handleKeyDown)
             documentRef.current.removeEventListener("scroll", handleScroll)
         }
     })

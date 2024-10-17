@@ -1,6 +1,7 @@
 import { useCallback, useEffect } from "react"
 import { useGetPokemonQuery } from "../../redux/api"
 import { useLoaderData } from "react-router-dom"
+import "../../styles/detailed.css"
 
 export async function loader({ params }: { params: any}) {
     const id = parseInt(params.id)
@@ -30,9 +31,21 @@ export default function Detailed() {
     }, [handleKeyDown])
 
     return (
-        <div>
-            <img src={data?.sprites.front_default} alt={data?.name} />
-            <h1>{data?.name}</h1>
+        <div className="container">
+            <div>
+                <img src={data?.image} alt={data?.name} />
+                <h1>{data?.name}</h1>
+            </div>
+            <div>
+                <div>
+                    <div>
+                        <p>Height: {data?.height}</p>
+                        <p>Weight: {data?.weight}</p>
+                    </div>
+
+                </div>
+                <div></div>
+            </div>
         </div>
     )
 }

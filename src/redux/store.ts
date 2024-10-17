@@ -1,6 +1,6 @@
 import localStorage from 'redux-persist/lib/storage';
 import { combineReducers, configureStore } from "@reduxjs/toolkit"
-import { FLUSH, PAUSE, PERSIST, persistReducer, PURGE, REGISTER, REHYDRATE } from "redux-persist"
+import { persistReducer } from "redux-persist"
 import TableState from './table';
 import { pokemonApi } from "./api"
 
