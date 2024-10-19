@@ -1,0 +1,47 @@
+.filter {
+    position: absolute;
+    top: 110%;
+    right: 0;
+    z-index: 100;
+    background-color: #1b2a3f;
+    padding: 1rem;
+    border-radius: 1rem;
+    width: 100%;
+}
+
+.filterButton {
+    position: relative;
+    margin-bottom: 0.5rem;
+    margin-right: 1rem;
+}
+
+.filterButton > button {
+    background-color: #1f2936;
+    color: white;
+    display: flex;
+    border: none;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
+    font-weight: bolder;
+    font-size: 1rem;
+}
+
+.filterButton > button:hover {
+    background-color: #384c68;
+}
+
+.filterButton > button > p {
+    margin: 0.5rem;
+}
+
+
+.filter > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.filter input {
+    display: inline-block;
+}

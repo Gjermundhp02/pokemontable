@@ -6,7 +6,7 @@ export type KeyVal = {
     weight: number
     types: string[]
     stats: Stats
-    generation?: string
+    generation?: string[]
     region?: string
 }
 

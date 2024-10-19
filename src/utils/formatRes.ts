@@ -6,7 +6,7 @@ export function filterPokemon(pokemon: Pokemon, generation?: string, region?: st
         id: pokemon.id,
         name: pokemon.name,
         image: pokemon.sprites.front_default,
-        generation: generation,
+        generation: generation?.split('-'),
         region: region,
         height: pokemon.height,
         weight: pokemon.weight,
@@ -24,10 +24,15 @@ export function filterPokemon(pokemon: Pokemon, generation?: string, region?: st
 }
 
 export function formatPokemon(pokemon: KeyVal): KeyVal {
+    if(pokemon.generation){
+        pokemon.generation[0] = pokemon.generation[0][0].toUpperCase() + pokemon.generation[0].slice(1)
+        pokemon.generation[1] = pokemon.generation[1].toUpperCase()
+    }
+
     return {
         ...pokemon,
         name: pokemon.name[0].toUpperCase() + pokemon.name.slice(1),
-        generation: pokemon.generation ? pokemon.generation[0].toUpperCase() + pokemon.generation.slice(1) : undefined,
+        generation: pokemon.generation,
         region: pokemon.region ? pokemon.region[0].toUpperCase() + pokemon.region.slice(1) : undefined,
         types: pokemon.types.map((type) => type[0].toUpperCase() + type.slice(1)),
     }

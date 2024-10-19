@@ -1,28 +1,29 @@
 import { useGetPokemonListQuery, useLazyGetPokemonListQuery } from "../redux/api"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../redux/store"
 import TableRow from "../components/tableRow"
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef } from "react"
 import "../styles/table.css"
+import { setActiveRow } from "../redux/table"
 
 export default function Home() {
     const { data, isFetching, isLoading } = useGetPokemonListQuery()
     const [fetchNextPage] = useLazyGetPokemonListQuery()
     const useAppSelector = useSelector.withTypes<RootState>()
     const table = useAppSelector((state) => state.TableState)
+    const dispatch = useDispatch()
 
     const listRefs = useRef<HTMLElement[]>([])
-    const [activeRow, setActiveRow] = useState(0);
+    const documentRef = useRef(document)
 
     const listitems = data?.pokemons.map((pokemon, index) => {
         return <TableRow 
                     ref={(el: HTMLTableRowElement) => listRefs.current[index] = el} 
                     key={index}
-                    {...{pokemon, table, index, activeRow}} 
+                    {...{pokemon, table, index}} 
                 />
     })
 
-    const documentRef = useRef(document)
 
     
     const handleKeyDown = useCallback((e: KeyboardEvent) => {
@@ -30,22 +31,22 @@ export default function Home() {
             case "ArrowDown":
                 if (!data?.pokemons) return false
                 e.preventDefault()
-                setActiveRow((prev) => Math.min(prev + 1, data?.pokemons.length - 1))
-                listRefs.current[activeRow+1]?.scrollIntoView({ behavior: "smooth", block: "center" })
+                dispatch(setActiveRow(Math.min(table.activeRow + 1, data?.pokemons.length - 1)))
+                listRefs.current[table.activeRow+1]?.scrollIntoView({ behavior: "smooth", block: "center" })
                 break;
             case "ArrowUp":
                 if (!data?.pokemons) return false
                 e.preventDefault()
-                setActiveRow((prev) => Math.max(prev - 1, 0))
-                listRefs.current[activeRow-1]?.scrollIntoView({ behavior: "smooth", block: "center" })
+                dispatch(setActiveRow(Math.max(table.activeRow - 1, 0)))
+                listRefs.current[table.activeRow-1]?.scrollIntoView({ behavior: "smooth", block: "center" })
                 break;
             case "Enter":
                 if (!data?.pokemons) return false
                 e.preventDefault()
-                listRefs.current[activeRow]?.click()
+                listRefs.current[table.activeRow]?.click()
                 break;
         }
-    }, [data?.pokemons, activeRow])
+    }, [data?.pokemons, table.activeRow, dispatch])
 
     const handleScroll = useCallback((e: Event) => {
         if (window.innerHeight + window.scrollY >= document.body.offsetHeight-window.innerHeight && !isFetching) {
@@ -61,13 +62,18 @@ export default function Home() {
             documentRef.current.removeEventListener("keydown", handleKeyDown)
             documentRef.current.removeEventListener("scroll", handleScroll)
         }
-    })
+    }, [handleKeyDown, handleScroll])
+
+    // Scroll to active row when entering the page
+    useEffect(() => {
+        listRefs.current[table.activeRow]?.scrollIntoView({ behavior: "auto", block: "center" })
+    }, [])
 
     return <div id="table">
         <table>
             <thead>
                 <tr id="thr">
-                    {table.picture && <th>Picture</th>}
+                    {table.image && <th>Picture</th>}
                     <th>Name</th>
                     <th>ID</th>
                     {table.weight && <th>Weight</th>}

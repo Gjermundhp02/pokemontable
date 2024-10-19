@@ -3,6 +3,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit"
 import { persistReducer } from "redux-persist"
 import TableState from './table';
 import { pokemonApi } from "./api"
+import { useDispatch, useSelector } from 'react-redux';
 
 // Combines all reducers
 const reducers = combineReducers({
@@ -41,6 +42,8 @@ const Store = configureStore({
 
 export type RootState = ReturnType<typeof Store.getState>
 export type AppDispatch = typeof Store.dispatch
+
+export const useAppSelector = useSelector.withTypes<RootState>()
 
 // Exporting the full Redux Store
 export default Store

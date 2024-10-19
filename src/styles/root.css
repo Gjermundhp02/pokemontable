@@ -1,8 +1,13 @@
-div {
+#RootContainer {
     margin: 6rem;
 }
 
-div > div {
-    margin: 0;
+#RootContainer > div {
     width: 100%;
+}
+
+#RootHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
 }

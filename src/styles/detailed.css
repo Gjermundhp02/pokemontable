@@ -1,14 +1,70 @@
-.container {
+.detailedContainer {
     background-color: #1b2a3f;
     border-radius: 1rem;
 }
 
-.container > div {
+.detailedContainer > div {
     display: flex;
 }
 
-img {
+
+.detailedContainer > div > img {
     width: 25%;
     image-rendering: crisp-edges;
     display: inline;
+}
+
+.headerCard {
+    margin: 1rem;
+}
+
+.headerCard h1 > span {
+    margin-left: 1rem;
+    letter-spacing: 0.25rem;
+}
+
+.content > div > p > span {
+    font-family: 'Georgia';
+}
+
+.content {
+    display: flex;
+}
+
+.content > div > p {
+    margin-bottom: 1rem;
+    margin-top: 0;
+}
+
+.statCard {
+    margin-left: 4rem;
+}
+
+.statCard > h2 {
+    margin: 0;
+}
+
+.statCard > div {
+    display: flex;
+}
+
+.statCard > div > div > div {
+    display: flex;
+}
+
+.statCard > div > div:first-of-type {
+    margin-right: 1rem;
+}
+
+.statCard > div > div > div > p {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.statCard > div > div > div > p:first-of-type {
+    margin-right: 1rem;
+}
+
+.statCard > div > div > div > p:last-of-type {
+    margin-left: auto;
 }

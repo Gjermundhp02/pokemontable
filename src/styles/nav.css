@@ -1,0 +1,15 @@
+.nav {
+    display: flex;
+    background-color: #162231;
+    padding: 0.5rem;
+    height: 2rem;
+    align-items: center;
+}
+
+.nav .right {
+    margin-left: auto;
+}
+
+.nav .material-symbols-outlined {
+    font-size: 2rem;
+}
