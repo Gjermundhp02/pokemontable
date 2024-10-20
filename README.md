@@ -44,10 +44,3 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
-
-## Sources
-https://blog.stackademic.com/pagination-infinite-loading-with-redux-toolkit-createapi-a265ac25c3bd
-https://github.com/eirikhanasand/pokemontable
-https://redux-toolkit.js.org/rtk-query/
-https://stackoverflow.com/questions/67572633/how-do-i-implement-a-function-to-navigate-through-my-react-table-using-arrow-key
-https://stackoverflow.com/questions/54633690/how-can-i-use-multiple-refs-for-an-array-of-elements-with-hooks
