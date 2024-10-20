@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from "react"
 import { useGetPokemonQuery } from "../../redux/api"
-import { Link, useLoaderData, useNavigate } from "react-router-dom"
+import { useLoaderData, useNavigate } from "react-router-dom"
 import "../../styles/detailed.css"
 import Nav from "../../components/nav"
 import { useDispatch } from "react-redux"
@@ -18,7 +18,7 @@ export default function Detailed() {
     const navigate = useNavigate()
     const loderdata = useLoaderData()
     const id = (loderdata as { id: number }).id // Type assertion
-    const { data, error, isLoading } = useGetPokemonQuery(id)
+    const { data } = useGetPokemonQuery(id)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -26,10 +26,20 @@ export default function Detailed() {
     })
     
     const handleKeyDown = useCallback((e: KeyboardEvent) => {
-        if (e.key === "Escape") {
-            navigate("/")
+        switch (e.key) {
+            case "ArrowDown":
+                e.preventDefault()
+                navigate(`/${id+1}`)
+                break;
+            case "ArrowUp":
+                e.preventDefault()
+                navigate(`/${id-1}`)
+                break;
+            case "Escape":
+                navigate("/")
+                break;
         }
-    }, [])
+    }, [id, navigate])
 
     // Register eventlisteners
     useEffect(() => {

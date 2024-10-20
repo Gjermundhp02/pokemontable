@@ -7,14 +7,13 @@ import "../styles/table.css"
 import { setActiveRow } from "../redux/table"
 
 export default function Home() {
-    const { data, isFetching, isLoading } = useGetPokemonListQuery()
+    const { data, isFetching } = useGetPokemonListQuery()
     const [fetchNextPage] = useLazyGetPokemonListQuery()
     const useAppSelector = useSelector.withTypes<RootState>()
     const table = useAppSelector((state) => state.TableState)
     const dispatch = useDispatch()
 
     const listRefs = useRef<HTMLElement[]>([])
-    const documentRef = useRef(document)
 
     const listitems = data?.pokemons.map((pokemon, index) => {
         return <TableRow 
@@ -24,24 +23,20 @@ export default function Home() {
                 />
     })
 
-
-    
     const handleKeyDown = useCallback((e: KeyboardEvent) => {
+        if (!data?.pokemons) return false
         switch (e.key) {
             case "ArrowDown":
-                if (!data?.pokemons) return false
                 e.preventDefault()
                 dispatch(setActiveRow(Math.min(table.activeRow + 1, data?.pokemons.length - 1)))
                 listRefs.current[table.activeRow+1]?.scrollIntoView({ behavior: "smooth", block: "center" })
                 break;
             case "ArrowUp":
-                if (!data?.pokemons) return false
                 e.preventDefault()
                 dispatch(setActiveRow(Math.max(table.activeRow - 1, 0)))
                 listRefs.current[table.activeRow-1]?.scrollIntoView({ behavior: "smooth", block: "center" })
                 break;
             case "Enter":
-                if (!data?.pokemons) return false
                 e.preventDefault()
                 listRefs.current[table.activeRow]?.click()
                 break;
@@ -56,17 +51,18 @@ export default function Home() {
     
     // Register eventlisteners
     useEffect(() => {
-        documentRef.current.addEventListener("keydown", handleKeyDown)
-        documentRef.current.addEventListener("scroll", handleScroll)
+        document.addEventListener("keydown", handleKeyDown)
+        document.addEventListener("scroll", handleScroll)
         return () => {
-            documentRef.current.removeEventListener("keydown", handleKeyDown)
-            documentRef.current.removeEventListener("scroll", handleScroll)
+            document.removeEventListener("keydown", handleKeyDown)
+            document.removeEventListener("scroll", handleScroll)
         }
     }, [handleKeyDown, handleScroll])
 
     // Scroll to active row when entering the page
     useEffect(() => {
         listRefs.current[table.activeRow]?.scrollIntoView({ behavior: "auto", block: "center" })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return <div id="table">

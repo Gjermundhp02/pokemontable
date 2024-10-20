@@ -3,7 +3,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit"
 import { persistReducer } from "redux-persist"
 import TableState from './table';
 import { pokemonApi } from "./api"
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 // Combines all reducers
 const reducers = combineReducers({

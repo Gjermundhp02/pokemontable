@@ -1,4 +1,4 @@
-import { BrowserRouter, createBrowserRouter, Route, RouterProvider, Routes } from "react-router-dom";
+import { createBrowserRouter, RouterProvider} from "react-router-dom";
 import Home from "./pages";
 import NotFound from "./notFound";
 import { PersistGate } from "redux-persist/integration/react"
